@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/stylesForoUsuario.css' %}">
+    <title>Foro</title>
+</head>
+<body>
+    {% comment %} MODIFICAR NAV {% endcomment %}
+    <nav class="navbar navbar-expand-lg bg-body-tertiary"><!--Nav-->
+        <div class="container-fluid">
+            <form class="d-flex" role="search" style="position: start;margin-top: 5px;" >
+                <a class="btn btn-outline-success" href="{% url 'logout' %}" type="submit" style="margin-right: 5px;">Cerrar sesion</a>
+                <a class="btn btn-outline-success" href="#" type="submit">Notificaciones</a>
+            </form>
+          </div>
+        </div>
+    </nav>
+    
+    <div class="container text-center">
+        <div class="row" style="margin-top: 50px">
+
+{% comment %} DATOS DEL LIBRO {% endcomment %}
+            <div class="col-3" id="columnaLibro">
+
+                <div id="divFoto">
+
+                    <img src="{% static 'images/default_imagen.jpg' %}" alt="Imagen por defecto">
+
+                </div>
+                <div class="text-container">
+                    <p>{{ titulo|default:"Título" }}</p>
+                    <p>{{ autor|default:"Autor" }}</p>
+                </div>
+            </div>
+            <div class="col-8" id="cuerpo"  >
+                <br><br>
+
+{% comment %} Formulario escribir post {% endcomment %}
+
+                <form method="post" action="{% url 'publicacion' %}">
+
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button type="submit" class="btn btn-primary float-right" id='botonPost'>Publicar</button>  
+
+                </form>
+
+{% comment %} Mostrar publicaciones {% endcomment %}
+                <div>
+                    <br><br>
+                    <h5 style='float: left;'>Publicaciones:</h5>
+                    <br><br>
+                    <ul>
+                                {% for publicacion in publicaciones %}
+                                    <div class="contenedorPublicacion">
+                                        <!-- Contenido de la publicación: -->
+                                        <strong>{{ publicacion.usuario.username }}</strong>: {{ publicacion.contenidoPost }}
+                                        
+                                        <!--PARA ELIMINAR PUBLICACION-->
+                                        
+                    <!--AGREGAR ACÁ BOTON DE REPORTAR) -->
+                                    </div>
+                                    {% if publicacion.usuario == user %}
+                                            <a href="{% url 'eliminar_publicacion' publicacion.id %}">Eliminar publicación</a> <br>
+                                    {% endif %}
+{% comment %} ACA COMIENZA EL ACORDEON {% endcomment %}
+
+                                    <p class="d-inline-flex gap-1">
+                                        <a class="custom-button" id="botonAcordeonComentarios-{{ publicacion.id }}" data-bs-toggle="collapse" href="#multiCollapseExample-{{ publicacion.id }}" role="button" aria-expanded="false" aria-controls="multiCollapseExample-{{ publicacion.id }}">Comentarios({{ publicacion.comentario_set.count }})</a>
+                                    </p>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="collapse multi-collapse" id="multiCollapseExample-{{ publicacion.id }}">
+                                                <div class="card card-body" style="margin-bottom: 100px">
+                                                    {% comment %} ACA VA EL CONTENIDO DEL ACORDEON {% endcomment %}
+                                                    
+                                                    <div class="contenedorComentarios">
+                                                        {% for comentario in publicacion.comentario_set.all %}
+                                                        <div class="comentario-individual">
+                                                            <strong>{{ comentario.usuario.username }}</strong>: {{ comentario.contenidoComentario }}
+                                                            
+                                                            <!-- PARA ELIMINAR COMENTARIO-->
+                                                            {% if comentario.usuario == user %}
+                                                             <a href="{% url 'eliminar_comentario' comentario.id %}">Eliminar comentario</a>
+                                                            {% endif %}
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+
+                                                    <!-- Formulario escribir comentario -->
+                                                    <div class="formularioComentarios">
+                                                        
+                                                        <form method="post" action="{% url 'comentar_publicacion' publicacion.id %}">
+                                                            {% csrf_token %}
+                                                            {{ form_comentario.as_p }}
+                                                            <button type="submit" class="btn btn-primary">Comentar</button>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+{% comment %} FIN DEL ACORDEON {% endcomment %}
+                                {% endfor %}
+                    </ul>
+                </div>
+            </div>     
+             
+    </div>
+        
+
+</body>
+</html>
