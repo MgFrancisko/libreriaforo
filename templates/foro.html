@@ -66,15 +66,18 @@
 
                                             <!--ELIMINAR Y EDITAR PUBLICACION-->
                                             {% if publicacion.usuario == user or user.is_superuser %}
-                                                <a href="{% url 'eliminarPublicacion' publicacion.id %}"><i class="bi bi-x-lg" style="color: red" float:"right"></i></a> <br>
+                                                <a href="{% url 'eliminarPublicacion' publicacion.id %}"><i class="bi bi-x-lg" style="color: red"></i></a>
                                                 
                                             {% endif %}
                                             {% if publicacion.usuario == user %}
-                                                <a href="{% url 'editarPublicacion' publicacion.id %}">Editar publicación</a>
+                                                <a href="{% url 'editarPublicacion' publicacion.id %}"><i class="bi bi-pencil-fill" style="color: blue"></i></a>
                                             {% endif %}
                                           
                                             
                                             <!--AGREGAR ACÁ BOTON DE REPORTAR) -->
+                                            {% if publicacion.usuario != user and not user.is_superuser %}
+                                            <button type="button" class="btn btn-danger" id="botonReportar">Reportar</button>
+                                            {%endif%}
                                         </div>
                                         {% if publicacion.usuario == user %}
                                                 
@@ -98,7 +101,7 @@
                                                                     <strong>{{ comentario.usuario.username }}</strong>: {{ comentario.contenidoComentario }}
                                                                     
                                                     <!-- PARA ELIMINAR COMENTARIO-->
-                                                                    {% if comentario.usuario == useror or user.is_superuser %}
+                                                                    {% if comentario.usuario == user or user.is_superuser %}
                                                                     <a href="{% url 'eliminarComentario' comentario.id %}"><i class="bi bi-x-lg" style="color: red"></i></a>
                                                                     
                                                                     {% endif %}
@@ -115,7 +118,7 @@
                                                             <form method="post" action="{% url 'comentarPublicacion' publicacion.id %}">
                                                                 {% csrf_token %}
                                                                 {{ form_comentario.as_p }}
-                                                                <button type="submit" class="btn btn-primary" id="botonComentar">Comentar</button>
+                                                                <button type="submit" class="btn btn-primary" id="botonComentar" style="float: right">Comentar</button>
                                                             </form>
 
                                                         </div>
