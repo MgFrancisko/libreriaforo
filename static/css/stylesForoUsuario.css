@@ -1,7 +1,89 @@
 
+#cuerpo {
+    background-color: #e9ecef; 
+    color: #495057; 
+}
+
+
+#columnaLibro {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
 
 #divFoto img {
-    max-width: 90%; 
-    height: auto; 
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
     margin-bottom: 10px;
 }
+
+
+
+
+#botonPost{
+    background-color: rgb(66, 44, 229);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    height: 34px;
+    width: 91px;
+    line-height: 1;
+}
+
+
+.contenedorPublicacion {
+    background-color: rgba(84, 117, 84, 0.592);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2px;
+    margin-top: 30px;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+
+
+
+.acordeonComentarios{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.comentarioIndividual {
+    border-top: 5px solid #dee2e6;
+    padding: 10px 0;
+    background-color: rgba(103, 152, 109, 0.295);
+    color:rgb(62, 61, 63);
+    text-align: left;
+    padding-left: 10px;
+    
+    float: center;
+    
+}
+
+
+.formularioComentarios {
+    padding-top: 10px;
+}
+
+#botonComentar {
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.formularioComentarios .btn:hover {
+    background-color: #218838;
+}
+
+
+
+

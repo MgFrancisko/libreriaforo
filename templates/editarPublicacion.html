@@ -1,0 +1,12 @@
+{% extends 'foro.html' %}
+{% load static %}
+
+{% block content %}
+  <h2>Editar publicación</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    <a href="{% url 'publicacion' %}" class="btn btn-primary">Cancelar</a>
+  </form>
+{% endblock %}  

@@ -28,10 +28,13 @@ urlpatterns = [
     path('perfiladmin/', views.perfil_admin, name='perfiladmin'),
     path('foro/', views.publicacion, name='publicacion'),
    
-    path('foro/<int:publicacion_id>/', views.comentar_publicacion, name='comentar_publicacion'),
+    path('foro/<int:publicacion_id>/', views.comentar_publicacion, name='comentarPublicacion'),
     
-    path('eliminar_publicacion/<int:post_id>/', views.eliminar_publicacion, name='eliminar_publicacion'),
-    path('eliminar_comentario/<int:comentario_id>/', views.eliminar_comentario, name='eliminar_comentario'),
+    path('eliminar_publicacion/<int:post_id>/', views.eliminar_publicacion, name='eliminarPublicacion'),
+    path('eliminar_comentario/<int:comentario_id>/', views.eliminar_comentario, name='eliminarComentario'),
+    path('editar_publicacion/<int:post_id>/', views.editar_publicacion, name='editarPublicacion'),
+    path('editar_comentario/<int:comentario_id>/', views.editar_comentario, name='editarComentario'),
+
 
 
 
