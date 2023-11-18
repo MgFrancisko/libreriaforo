@@ -131,7 +131,7 @@ def comentar_publicacion(request, publicacion_id):
 @login_required
 def eliminar_publicacion(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    if post.usuario == request.user:
+    if post.usuario == request.user or request.user.is_superuser:
         post.delete()
     return redirect('publicacion')
 
@@ -139,7 +139,7 @@ def eliminar_publicacion(request, post_id):
 @login_required
 def eliminar_comentario(request, comentario_id):
     comentario = get_object_or_404(Comentario, id=comentario_id)
-    if comentario.usuario == request.user:
+    if comentario.usuario == request.user or request.user.is_superuser:
         comentario.delete()
     return redirect('publicacion')
 

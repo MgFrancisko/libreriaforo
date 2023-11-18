@@ -39,7 +39,7 @@
                     <p>{{ autor|default:"Autor" }}</p>
                 </div>
             </div>
-            <!--Este block content es para reemplazar el formulario 7-->
+            <!--Este block content es para reemplazar el formulario al editar-->
             
                 <div class="col-8" id="cuerpo"  >  <br><br>  
                 {% block content %}                
@@ -65,11 +65,13 @@
                                             <strong>{{ publicacion.usuario.username }}</strong>: {{ publicacion.contenidoPost }} <br>
 
                                             <!--ELIMINAR Y EDITAR PUBLICACION-->
-                                            {% if publicacion.usuario == user %}
+                                            {% if publicacion.usuario == user or user.is_superuser %}
                                                 <a href="{% url 'eliminarPublicacion' publicacion.id %}"><i class="bi bi-x-lg" style="color: red" float:"right"></i></a> <br>
+                                                
+                                            {% endif %}
+                                            {% if publicacion.usuario == user %}
                                                 <a href="{% url 'editarPublicacion' publicacion.id %}">Editar publicación</a>
                                             {% endif %}
-                                            
                                           
                                             
                                             <!--AGREGAR ACÁ BOTON DE REPORTAR) -->
@@ -90,17 +92,17 @@
                                                     <div class="card card-body" >
                                                         {% comment %} ACA VA EL CONTENIDO DEL ACORDEON {% endcomment %}
                                                         
-                                                        <div class="contenedorComentarios">
+                                                        <div>
                                                             {% for comentario in publicacion.comentario_set.all %}
                                                                 <div class="comentarioIndividual">
                                                                     <strong>{{ comentario.usuario.username }}</strong>: {{ comentario.contenidoComentario }}
                                                                     
                                                     <!-- PARA ELIMINAR COMENTARIO-->
-                                                                    {% if comentario.usuario == user %}
+                                                                    {% if comentario.usuario == useror or user.is_superuser %}
                                                                     <a href="{% url 'eliminarComentario' comentario.id %}"><i class="bi bi-x-lg" style="color: red"></i></a>
                                                                     
                                                                     {% endif %}
-                                                                    {% if comentario.usuario == user %}
+                                                                    {% if comentario.usuario == user  %}
                                                                         <a href="{% url 'editarComentario' comentario.id %}"><i class="bi bi-pencil-fill" style="color: blue"></i></a>
                                                                     {% endif %}
                                                                 </div>
