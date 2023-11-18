@@ -98,7 +98,7 @@
                                                                     <strong>{{ comentario.usuario.username }}</strong>: {{ comentario.contenidoComentario }}
                                                                     
                                                     <!-- PARA ELIMINAR COMENTARIO-->
-                                                                    {% if comentario.usuario == useror or user.is_superuser %}
+                                                                    {% if comentario.usuario == user or user.is_superuser %}
                                                                     <a href="{% url 'eliminarComentario' comentario.id %}"><i class="bi bi-x-lg" style="color: red"></i></a>
                                                                     
                                                                     {% endif %}
